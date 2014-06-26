@@ -1,16 +1,7 @@
+import java.io.*;
+import java.net.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.io.IOException;
-import java.net.UnknownHostException;
-
-public class Client {
-    
+public class StockClient {
     public static void main(String[] args) throws IOException {
         
         if (args.length != 2) {
@@ -120,7 +111,7 @@ public class Client {
                                         System.out.println("Transaction Denied.\n");    
                                     }
                                 } else {
-                                    System.out.println("Share volume should be a positive integer. Try again.\n");
+                                    System.out.println("Share volume should be a positive integer and the maximum is 1000. Try again.\n");
                                 }
                             } else {
                                 System.out.println("Invalid input. Try again.\n");
@@ -186,7 +177,7 @@ public class Client {
                                         System.out.println("Transaction Denied.\n");    
                                     }
                                 } else {
-                                    System.out.println("Share volume should be a positive integer. Try again.\n");
+                                    System.out.println("Share volume should be a positive integer and the maximum is 1000. Try again.\n");
                                 }
                             } else {
                                 System.out.println("Invalid input. Try again.\n");
@@ -208,7 +199,7 @@ public class Client {
             System.exit(1);
         }
     }
-    
+
     public static boolean isPositiveInteger(String s){
         try {
             Integer.parseInt(s);
@@ -216,7 +207,7 @@ public class Client {
             return false;
         }
         int var = Integer.parseInt(s);
-        if (var > 0) {
+        if (var > 0 && var <= 1000) {
             return true;
         } else {
             return false;
@@ -274,37 +265,4 @@ public class Client {
         }
     }
     */
-    
-    
-    /*
-    private static BufferedReader inFromSock;
-    private static BufferedReader inFromUser;
-    private static PrintWriter outToSock;
-
-    public static void main(String[] args) {
-        String input;
-        try {
-            Socket s = new Socket("localhost", 9090);
-            inFromSock = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            inFromUser = new BufferedReader(new InputStreamReader(System.in));
-            outToSock = new PrintWriter(s.getOutputStream(), true);
-
-            while (true) {
-                System.out.print("Input:");
-                input = inFromUser.readLine();
-                
-                
-                outToSock.println(input);
-                System.out.println("OUT:" + inFromSock.readLine());
-                if (input.equals("QUIT")) {
-                    break;
-                }
-                
-            }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-                */
 }
