@@ -175,6 +175,7 @@ public class ConnectionHandler implements Runnable {
                     }
                     case "QUIT": {
                         System.out.println("returning");
+                        socket.close();
                         return;
                     }
                     default: {

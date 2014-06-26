@@ -19,19 +19,23 @@ import java.util.logging.Logger;
 public class Server {
 
     public static void main(String[] args) throws IOException {
+        int portNo = 9090;
+
+        try {
+            if (args.length == 1) {
+                portNo = Integer.parseInt(args[0]);
+            }
+        } catch (Exception e) {
+            System.err.println("Invalid port number!");
+            System.exit(1);
+        }
+
         ServerSocket listener = new ServerSocket(9090);
         try {
             while (true) {
                 Socket socket = listener.accept();
-                try {
-                    Thread t = new Thread(new ConnectionHandler(socket));
-                    t.start();
-                    t.join();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    socket.close();
-                }
+                Thread t = new Thread(new ConnectionHandler(socket));
+                t.start();
             }
         } finally {
             listener.close();
