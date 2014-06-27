@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import stock.StockControl;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -31,6 +33,9 @@ public class Server {
         }
 
         ServerSocket listener = new ServerSocket(9090);
+        
+        StockControl.startUpdater(120000);
+        
         try {
             while (true) {
                 Socket socket = listener.accept();

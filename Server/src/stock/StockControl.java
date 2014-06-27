@@ -17,12 +17,17 @@ import java.util.logging.Logger;
 public class StockControl {
 
     private static class Updater implements Runnable {
+        private int time = 120000;
+        
+        public Updater(int time) {
+            this.time = time;
+        }
 
         public void run() {
             while (true) {
                 try {
                     StockControl.doUpdate();
-                    Thread.sleep(10000);
+                    Thread.sleep(time);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(StockControl.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -48,8 +53,8 @@ public class StockControl {
         return store.setInventory(identifier, newInventory);
     }
     
-    public static void startUpdater() {
-        Thread t = new Thread(new Updater());
+    public static void startUpdater(int time) {
+        Thread t = new Thread(new Updater(time));
         t.start();
     }
 
