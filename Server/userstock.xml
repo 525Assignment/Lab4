@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>	
+	<user balance="6002.930097579956" id="vyas"><stock identifier="CCCR" quantity="108"/><stock identifier="GOOG" quantity="96"/><stock identifier="AAPL" quantity="100"/></user>
+	<user balance="1015.039999961853" id="chris">
+	    <stock identifier="CCCR" quantity="2"/>
+	</user>
+</root>
