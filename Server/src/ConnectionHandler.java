@@ -77,7 +77,7 @@ public class ConnectionHandler implements Runnable {
 
         StockControl.setInventory(id, newInventory);
         UserControl.addStock(uid, id, amount);
-        UserControl.setBalance(uid, newBal);
+        //UserControl.setBalance(uid, newBal);
 
         return true;
     }
@@ -102,11 +102,11 @@ public class ConnectionHandler implements Runnable {
         
         if (UserControl.canSell(uid, id, amount)) {
             UserControl.sellStock(uid, id, amount);
-            
+            /*
             double balance = UserControl.getBalance(uid);
             balance += s.getPrice() * amount;
             UserControl.setBalance(uid, balance);
-            
+            */
             int newInventory = s.getInventory() + amount;
             StockControl.setInventory(id, newInventory);
         }

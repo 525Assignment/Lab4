@@ -6,8 +6,12 @@
 
 package user;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import stock.Stock;
+import stock.StockControl;
 
 /**
  *
@@ -18,43 +22,98 @@ public class UserControl {
     private static double balance = 1000;
     
     public static double getBalance(String uid) {
-        return balance;
+    	if(checkUserExistance(uid))
+    	{
+    	UserStorageAccess xmlAccessor = new UserStorageAccess();
+        return xmlAccessor.getUserBalance(uid);
+    	}else
+    	{
+    		return 0;
+    	}
     }
     
     public static void setBalance(String uid, double bal) {
         balance = bal;
     }
     
-    public static HashMap<String, Integer> getUserStock(String uid) {
+    public static synchronized HashMap<String, Integer> getUserStock(String uid) {
+    	UserStorageAccess xmlAccessor = new UserStorageAccess();
+    	stocks = xmlAccessor.getUserStocks(uid);
+    	//System.out.println("size of Hashmap : " + stocks.size());
+    	//System.out.println(stocks.containsKey("CCR"));
         return stocks;
+    }
+    
+    public static boolean checkUserExistance(String uid)
+    {
+    	UserStorageAccess xmlAccessor = new UserStorageAccess();
+    	if(xmlAccessor.getUserNode(uid)!=null)
+    	{
+    	return true;
+    	}
+    	return false;
     }
     
     
     public static void addStock(String uid, String id, int amount) {
+    	if(checkUserExistance(uid))
+    	{
+    	stocks = UserControl.getUserStock(uid);
         if (stocks.containsKey(id)) {
             stocks.put(id, stocks.get(id) + amount);
         } else {
             stocks.put(id, amount);
-        }
+        }       
+        try {
+        	
+        	Stock currentStock = StockControl.queryStock(id);
+            System.out.println(currentStock);
+        	UserStorageAccess xmlAccessor = new UserStorageAccess();
+			xmlAccessor.removeStock(uid,currentStock .getPrice()*amount,stocks);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	}
     }
     
     public static boolean canSell(String uid, String id, int amount) {
+    	if(checkUserExistance(uid))
+    	{
+    	if(!UserControl.getUserStock(uid).isEmpty())
+    	{
         if (stocks.containsKey(id)) {
             if (stocks.get(id) >= amount) {
                 return true;
             }
         } 
-        
+    	}
+    	}
         return false;
     }
     
     public static void sellStock(String uid, String id, int amount) {
+    	
+    	/* May be add IF loop here with canSell to handle the condition here */
         int currAmount = stocks.get(id);
+        UserStorageAccess xmlAccessor = new UserStorageAccess();
+        
+        Stock currentStock = StockControl.queryStock(id);
+        System.out.println(currentStock);
+        
+        
         if (currAmount == amount) {
             stocks.remove(id);
         } else {
             stocks.put(id, currAmount - amount);
         }
+        
+        try {
+			xmlAccessor.removeStock(uid,currentStock.getPrice()*amount,stocks);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     
