@@ -116,6 +116,11 @@ public class UserControl {
 		}
     }
     
+    public static void addUserIfNotExist(String uid) {
+        UserStorageAccess usa = new UserStorageAccess();
+        usa.addUserIfNotExist(uid);
+    }
+    
     
     
 }

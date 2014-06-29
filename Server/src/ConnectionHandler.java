@@ -44,6 +44,7 @@ public class ConnectionHandler implements Runnable {
             parts = line.split(" ");
             if (parts[0].equals("USER")) {
                 uid = parts[1];
+                UserControl.addUserIfNotExist(uid);
                 out.println("OK");
                 return;
             } else {
