@@ -80,7 +80,8 @@ public class UserControl {
     public static boolean canSell(String uid, String id, int amount) {
     	if(checkUserExistance(uid))
     	{
-    	if(!UserControl.getUserStock(uid).isEmpty())
+	stocks = UserControl.getUserStock(uid);
+    	if(!stocks.isEmpty())
     	{
         if (stocks.containsKey(id)) {
             if (stocks.get(id) >= amount) {

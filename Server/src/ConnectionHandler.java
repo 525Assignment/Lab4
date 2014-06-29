@@ -110,8 +110,9 @@ public class ConnectionHandler implements Runnable {
             */
             int newInventory = s.getInventory() + amount;
             StockControl.setInventory(id, newInventory);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
