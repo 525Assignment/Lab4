@@ -69,7 +69,7 @@ public class UserControl {
         	Stock currentStock = StockControl.queryStock(id);
             System.out.println(currentStock);
         	UserStorageAccess xmlAccessor = new UserStorageAccess();
-			xmlAccessor.removeStock(uid,currentStock .getPrice()*amount,stocks);
+			xmlAccessor.addStock(uid,currentStock .getPrice()*amount,stocks);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
